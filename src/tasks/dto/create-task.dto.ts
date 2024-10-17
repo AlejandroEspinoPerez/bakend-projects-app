@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
-// src/activities/dto/create-activity.dto.ts
+// src/tasks/dto/create-task.dto.ts
 import { IsNotEmpty, IsString, IsDateString, IsNumber } from 'class-validator';
 
-export class CreateActivityDto {
+export class CreateTaskDto {
     @IsNotEmpty()
     @IsString()
     nombre: string;
@@ -21,9 +21,9 @@ export class CreateActivityDto {
 
     @IsNotEmpty()
     @IsNumber()
-    proyecto: number;
+    responsable: number; // ID del responsable
 
     @IsNotEmpty()
     @IsNumber()
-    responsable: number; // Añade esta línea
+    actividad: number; // ID de la actividad asociada
 }

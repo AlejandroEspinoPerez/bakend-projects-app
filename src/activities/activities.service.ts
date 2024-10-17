@@ -19,23 +19,31 @@ export class ActivityService {
         private userRepository: Repository<User>
     ) { }
 
-    // src/activities/activities.service.ts
     async createActivity(createActivityDto: CreateActivityDto): Promise<Activity> {
-        const { proyectoId, responsableId, ...activityData } = createActivityDto;
+        const { proyecto, responsable, ...restoDatos } = createActivityDto;
 
-        const proyecto = await this.projectRepository.findOne({ where: { id: proyectoId } });
-        if (!proyecto) {
-            throw new NotFoundException(`Proyecto con ID ${proyectoId} no encontrado.`);
+        // Busca el proyecto por ID
+        const project = await this.projectRepository.findOne({ where: { id: proyecto } });
+        if (!project) {
+            throw new NotFoundException(`Proyecto con ID ${proyecto} no encontrado.`);
         }
 
-        const responsable = await this.userRepository.findOne({ where: { id: responsableId } }); // Asegúrate de importar y usar el repositorio de usuarios
-        if (!responsable) {
-            throw new NotFoundException(`Usuario con ID ${responsableId} no encontrado.`);
+        // Busca el responsable por ID
+        const responsableEntity = await this.userRepository.findOne({ where: { id: responsable } });
+        if (!responsableEntity) {
+            throw new NotFoundException(`Responsable con ID ${responsable} no encontrado.`);
         }
 
-        const actividad = this.activityRepository.create({ ...activityData, proyecto, responsable }); // Asignar responsable como objeto User
-        return this.activityRepository.save(actividad);
+        // Crea la actividad con el proyecto y el responsable asociados
+        const newActivity = this.activityRepository.create({
+            ...restoDatos,
+            proyecto: project,        // Relaciona el proyecto encontrado
+            responsable: responsableEntity,  // Relaciona el responsable encontrado
+        });
+
+        return await this.activityRepository.save(newActivity);
     }
+
 
     // Obtener actividades por ID de proyecto
     async getActivitiesByProjectId(projectId: number): Promise<Activity[]> {
@@ -44,17 +52,22 @@ export class ActivityService {
             throw new NotFoundException(`Proyecto con ID ${projectId} no encontrado.`);
         }
 
-        return this.activityRepository.find({ where: { proyecto: { id: projectId } }, relations: ['proyecto'] });
+        // Añadir la relación con 'responsable'
+        return this.activityRepository.find({
+            where: { proyecto: { id: projectId } },
+            relations: ['proyecto', 'responsable'],  // Asegúrate de incluir ambas relaciones
+        });
     }
+
 
     // Listar todas las actividades
     findAll(): Promise<Activity[]> {
-        return this.activityRepository.find({ relations: ['proyecto'] });
+        return this.activityRepository.find({ relations: ['proyecto','responsable'] });
     }
 
     // Obtener una actividad por ID
     findOne(id: number): Promise<Activity> {
-        return this.activityRepository.findOne({ where: { id }, relations: ['proyecto'] });
+        return this.activityRepository.findOne({ where: { id }, relations: ['proyecto','responsable'] });
     }
 
     // Actualizar una actividad
