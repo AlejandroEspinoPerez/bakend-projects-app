@@ -7,6 +7,7 @@ import { DatabaseModule } from './database/database.module';
 import { ProjectsModule } from './projects/projects.module';
 import { ActivityModule } from './activities/activities.module';
 import { TaskModule } from './tasks/tasks.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { TaskModule } from './tasks/tasks.module';
     UsersModule,
     ProjectsModule,
     ActivityModule,
-    TaskModule
+    TaskModule,
+    EventsModule
   ],
 })
 export class AppModule { }
