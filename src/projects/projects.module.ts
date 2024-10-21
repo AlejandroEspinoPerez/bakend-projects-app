@@ -11,5 +11,6 @@ import { User } from '../users/users.entity';  // Importar la entidad de usuario
     imports: [TypeOrmModule.forFeature([Project, User])],
     providers: [ProjectsService],
     controllers: [ProjectsController],
+    exports: [ProjectsService, TypeOrmModule],
 })
 export class ProjectsModule { }
