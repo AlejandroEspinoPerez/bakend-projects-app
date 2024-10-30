@@ -32,6 +32,16 @@ export class UsersController {
         return this.usersService.findByUsername(nombre);
     }
 
+    @Get('members')
+    async getMembers(): Promise<User[]> {
+        return this.usersService.findMembers();
+    }
+
+    @Get('lider')
+    async getLider(): Promise<User[]> {
+        return this.usersService.findLiders();
+    }
+
     // Modificar un usuario
     @Put(':id')
     update(@Param('id') id: number, @Body() userData: Partial<User>): Promise<User> {

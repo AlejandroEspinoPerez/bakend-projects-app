@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // src/tasks/dto/create-task.dto.ts
-import { IsNotEmpty, IsString, IsDateString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsDateString, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateTaskDto {
     @IsNotEmpty()
@@ -17,7 +17,8 @@ export class CreateTaskDto {
 
     @IsNotEmpty()
     @IsDateString()
-    fechaFin: string;
+    @IsOptional()
+    fechaFin?: string;
 
     @IsNotEmpty()
     @IsNumber()

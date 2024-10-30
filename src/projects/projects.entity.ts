@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 // src/projects/project.entity.ts
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { User } from '../users/users.entity';
@@ -13,13 +12,13 @@ export class Project {
     nombre: string;
 
     @Column()
-    descripcion: string;  // Descripción del proyecto
+    descripcion: string;
 
     @Column()
-    tipo: string;  // Puede ser 'infraestructura', 'salud', 'educación', 'cultura'
+    tipo: string;
 
     @Column()
-    localidad: string;  // Localidad donde se lleva a cabo el proyecto
+    localidad: string;
 
     @ManyToOne(() => User)  // Relación de muchos proyectos a un líder
     lider: User;
@@ -28,24 +27,21 @@ export class Project {
     @JoinTable()  // Tabla intermedia para almacenar los miembros del proyecto
     miembros: User[];
 
-    // Ficha aprobada
     @Column()
-    objetivos: string;  // Descripción de los objetivos del proyecto
+    objetivos: string;
 
     @Column()
-    presupuesto: number;  // Presupuesto asignado al proyecto
+    presupuesto: number;
 
     @Column()
-    fechaInicio: Date;  // Fecha de inicio del proyecto
+    fechaInicio: Date;
+
+    @Column({ nullable: true })  // Hacemos que la columna sea opcional
+    fechaFin: Date;
 
     @Column()
-    fechaFin: Date;  // Fecha de finalización del proyecto
+    resultado: string;
 
-    @Column()
-    resultado: string;  // Resultados esperados del proyecto
-
-    // Relación con actividades
     @OneToMany(() => Activity, (activity) => activity.proyecto, { cascade: true })
-    activities: Activity[];  // Un proyecto tiene muchas actividades
-
+    activities: Activity[];
 }

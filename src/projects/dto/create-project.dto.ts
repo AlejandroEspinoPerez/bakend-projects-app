@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-// src/projects/dto/create-project.dto.ts
 // src/projects/dto/create-project.dto.ts
 import { IsString, IsNumber, IsArray, IsOptional } from 'class-validator';
 
@@ -17,11 +15,11 @@ export class CreateProjectDto {
     localidad: string;
 
     @IsNumber()
-    lider: number;  // ID del líder
+    lider: number;
 
     @IsArray()
     @IsOptional()
-    miembros?: number[];  // IDs de los miembros del proyecto
+    miembros?: number[];
 
     @IsString()
     objetivos: string;
@@ -32,8 +30,9 @@ export class CreateProjectDto {
     @IsString()
     fechaInicio: string;
 
+    @IsOptional()
     @IsString()
-    fechaFin: string;
+    fechaFin?: string;
 
     @IsString()
     resultado: string;

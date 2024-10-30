@@ -18,7 +18,7 @@ export class Task {
     @Column({ type: 'date' })
     fechaInicio: string;
 
-    @Column({ type: 'date' })
+    @Column({ type: 'date' ,nullable: true })
     fechaFin: string;
 
     @ManyToOne(() => User, { onDelete: 'SET NULL' }) // Relación con User

@@ -47,4 +47,18 @@ export class UsersService {
     async remove(id: number): Promise<void> {
         await this.usersRepository.delete(id);
     }
+
+    // Método para obtener solo los miembros
+    async findMembers(): Promise<User[]> {
+        return this.usersRepository.find({
+            where: { rol: 'Miembro' }, // Asegúrate de que el rol esté correctamente configurado
+        });
+    }
+
+    // Método para obtener solo los miembros
+    async findLiders(): Promise<User[]> {
+        return this.usersRepository.find({
+            where: { rol: 'Lider' }, // Asegúrate de que el rol esté correctamente configurado
+        });
+    }
 }

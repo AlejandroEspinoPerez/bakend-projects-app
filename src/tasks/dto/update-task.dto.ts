@@ -17,6 +17,7 @@ export class UpdateTaskDto {
 
     @IsOptional()
     @IsDateString()
+    @IsOptional()
     fechaFin?: string;
 
     @IsOptional()
